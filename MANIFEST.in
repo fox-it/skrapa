@@ -1,0 +1,2 @@
+exclude .gitignore
+recursive-exclude .github/ *

@@ -1,0 +1,43 @@
+name: Tests
+
+on: [push, pull_request]
+
+jobs: 
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.x"
+          cache: "pip"
+          cache-dependency-path: "pyproject.toml"
+      - run: pip install tox
+      - run: tox run -e lint
+
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ["ubuntu-latest", "windows-latest"]
+        python-version: ["3.7", "3.8", "3.9", "3.10", "3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+          cache-dependency-path: "pyproject.toml"
+      - run: pip install tox
+      - run: tox run -e ${{ matrix.python-version }}
+      - uses: codecov/codecov-action@v3
+        with:
+          env_vars: PYTHON
+          files: coverage.xml
+          flags: unittests
+          verbose: true
+      - uses: actions/upload-artifact@v3
+        with:
+          name: coverage
+          path: coverage.xml

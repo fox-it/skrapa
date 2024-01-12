@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools>=65.5.0", "setuptools_scm[toml]>=6.4.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "skrapa"
+description = "Minimal Python memory scraper with memory attributes support"
+readme = "README.md"
+requires-python = "~=3.7"
+license.text = "Apache License 2.0"
+authors = [
+  {name = "Axel Boesenach", email = "axel.boesenach@fox-it.com"},
+  {name = "Erik Schamper", email = "erik.schamper@fox-it.com"}
+]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Information Technology",
+  "License :: OSI Approved",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Topic :: Security",
+  "Topic :: Utilities",
+]
+dynamic = ["version"]
+
+[project.urls]
+repository = "https://github.com/fox-it/skrapa"
+
+[project.optional-dependencies]
+yara = [
+  "yara-python-wheel==4.4.0"
+]
+
+[tool.black]
+line-length = 120
+
+[tool.isort]
+profile = "black"
+known_first_party = ["skrapa"]
+
+[tool.setuptools.packages.find]
+include = ["skrapa", "skrapa.linux", "skrapa.windows"]
+
+[tool.setuptools_scm]
