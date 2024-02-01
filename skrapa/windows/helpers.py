@@ -166,7 +166,7 @@ kernel32.VirtualQueryEx.argtypes = [HANDLE, LPCVOID, LPVOID, SIZE_T]
 kernel32.GetSystemInfo.restype = None
 kernel32.OpenProcess.restype = HANDLE
 psapi.EnumProcesses.restype = SIZE_T
-psapi.GetProcessImageFileNameA.restype = SIZE_T
+psapi.GetProcessImageFileNameW.restype = SIZE_T
 
 
 MAX_PATH = 260
