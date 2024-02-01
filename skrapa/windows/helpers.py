@@ -302,7 +302,7 @@ def get_process_file_name(hProcess: int) -> str:
     kernel32.SetLastError(0)
 
     filename = (ctypes.c_char * MAX_PATH)()
-    process_name_length = psapi.GetProcessImageFileNameA(
+    process_name_length = psapi.GetProcessImageFileNameW(
         hProcess,
         filename,
         MAX_PATH,
@@ -311,7 +311,7 @@ def get_process_file_name(hProcess: int) -> str:
     if process_name_length == 0:
         raise GetProcessImageFileNameError(f"GetProcessImageFileName Error: 0x{kernel32.GetLastError():x}")
 
-    return filename[:process_name_length].decode("utf-8")
+    return filename[: process_name_length * 2].decode("utf-16-le")
 
 
 def get_process_architecture(hProcess: int) -> Architecture:
